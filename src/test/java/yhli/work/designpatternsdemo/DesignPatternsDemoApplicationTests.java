@@ -12,6 +12,11 @@ import yhli.work.designpatternsdemo.abstractfactory.JDKProxy;
 import yhli.work.designpatternsdemo.abstractfactory.impl.CacheServiceImpl;
 import yhli.work.designpatternsdemo.abstractfactory.impl.EGMCacheAdapter;
 import yhli.work.designpatternsdemo.abstractfactory.impl.IIRCacheAdapter;
+import yhli.work.designpatternsdemo.adapterpattern.InternalOrderAdapterServiceImpl;
+import yhli.work.designpatternsdemo.adapterpattern.MQAdapter;
+import yhli.work.designpatternsdemo.adapterpattern.RebateInfo;
+import yhli.work.designpatternsdemo.adapterpattern.ThirdPartyOrderServiceImpl;
+import yhli.work.designpatternsdemo.adapterpattern.mq.CreateAccount;
 import yhli.work.designpatternsdemo.builderpattern.p1.Builder;
 import yhli.work.designpatternsdemo.factorypattern.AwardReq;
 import yhli.work.designpatternsdemo.factorypattern.AwardRes;
@@ -20,6 +25,8 @@ import yhli.work.designpatternsdemo.factorypattern.IDistributionGoods;
 import yhli.work.designpatternsdemo.prototypepattern.p1.QuestionBankController;
 import yhli.work.designpatternsdemo.prototypepattern.p1.util.TopicRandomUtil;
 
+import java.lang.reflect.InvocationTargetException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,6 +41,39 @@ class DesignPatternsDemoApplicationTests {
     void contextLoads() {
 
     }
+
+    @Test
+    void testFirstAdapter(){
+        InternalOrderAdapterServiceImpl internalOrderAdapterService = new InternalOrderAdapterServiceImpl();
+        System.out.println("自营"+internalOrderAdapterService.isFirst("100001"));
+        ThirdPartyOrderServiceImpl thirdPartyOrderService = new ThirdPartyOrderServiceImpl();
+        System.out.println("非自营"+thirdPartyOrderService.isFirst("100001"));
+    }
+
+
+    @Test
+    void testMQAdapter() throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
+
+        CreateAccount createAccount = new CreateAccount();
+        createAccount.setNumber("100001");
+        createAccount.setAddress("四川省成都市金牛区西南交通大学");
+        createAccount.setAccountDate(new Date());
+        createAccount.setDesc("在校开户");
+
+        HashMap<String, String> map1 = new HashMap<>();
+
+        map1.put("userId","number");
+        map1.put("businessId","number");
+        map1.put("businessTime","accountDate");
+        map1.put("businessDesc","desc");
+
+        RebateInfo filter1 = MQAdapter.filter(createAccount.toString(), map1);
+
+        System.out.println("适配前"+createAccount.toString());
+        System.out.println("适配后"+JSON.toJSONString(filter1));
+
+    }
+
 
     @Test
     void testPrototypePattern() throws CloneNotSupportedException {

@@ -24,7 +24,7 @@ public class DuluxCoat implements Matter {
 
     @Override
     public String model() {
-        return "型号";
+        return "第二代";
     }
 
     @Override

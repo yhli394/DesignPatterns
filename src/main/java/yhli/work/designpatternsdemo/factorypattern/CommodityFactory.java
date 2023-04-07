@@ -10,7 +10,7 @@ import yhli.work.designpatternsdemo.factorypattern.impl.PhysicalCommodityService
 import java.util.HashMap;
 import java.util.Map;
 
-/**简单工厂
+/**
  * @author yhli3
  * @ClassName CommodityFactory.java
  * @packageName yhli.work.designpatternsdemo.factorypattern

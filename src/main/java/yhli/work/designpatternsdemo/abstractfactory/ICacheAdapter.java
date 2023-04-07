@@ -4,7 +4,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.concurrent.TimeUnit;
 
-/**
+/**抽象工厂了解一下即可
  * @author yhli3
  * @ClassName ICacheAdapter.java
  * @packageName yhli.work.designpatternsdemo.abstractfactory
