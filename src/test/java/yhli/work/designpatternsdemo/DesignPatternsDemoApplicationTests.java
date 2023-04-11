@@ -17,18 +17,21 @@ import yhli.work.designpatternsdemo.adapterpattern.MQAdapter;
 import yhli.work.designpatternsdemo.adapterpattern.RebateInfo;
 import yhli.work.designpatternsdemo.adapterpattern.ThirdPartyOrderServiceImpl;
 import yhli.work.designpatternsdemo.adapterpattern.mq.CreateAccount;
+import yhli.work.designpatternsdemo.bridgepattern.FacePayment;
+import yhli.work.designpatternsdemo.bridgepattern.FingerprintPayment;
+import yhli.work.designpatternsdemo.bridgepattern.WxPay;
+import yhli.work.designpatternsdemo.bridgepattern.ZfbPay;
 import yhli.work.designpatternsdemo.builderpattern.p1.Builder;
 import yhli.work.designpatternsdemo.factorypattern.AwardReq;
 import yhli.work.designpatternsdemo.factorypattern.AwardRes;
 import yhli.work.designpatternsdemo.factorypattern.CommodityFactory;
 import yhli.work.designpatternsdemo.factorypattern.IDistributionGoods;
 import yhli.work.designpatternsdemo.prototypepattern.p1.QuestionBankController;
-import yhli.work.designpatternsdemo.prototypepattern.p1.util.TopicRandomUtil;
 
 import java.lang.reflect.InvocationTargetException;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Map;
 
 
 @RunWith(SpringRunner.class)
@@ -40,6 +43,17 @@ class DesignPatternsDemoApplicationTests {
     @Test
     void contextLoads() {
 
+    }
+
+    @Test
+    void test_pay(){
+        logger.info("模拟微信人脸支付");
+        WxPay wxPay = new WxPay(new FacePayment());
+        wxPay.transfer("wx_1009","1009",new BigDecimal(100));
+
+        logger.info("模拟支付宝指纹支付");
+        ZfbPay zfbPay = new ZfbPay(new FingerprintPayment());
+        zfbPay.transfer("jfb_123456","123456",new BigDecimal(100));
     }
 
     @Test
